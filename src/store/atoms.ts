@@ -10,6 +10,7 @@ export const resultsAtom = atom<CharCardData[]>([]);
 export const termCardsAtom = atom<CharCardData[]>([]);
 export const sortStyleAtom = atom<SortStyle>("byUnicode");
 export const isSearchingAtom = atom(false);
+export const pageSizeAtom = atom(50);
 
 export const pasteTypeAtom = atomWithStorage<PasteType>(
   "yaist-pasteType",

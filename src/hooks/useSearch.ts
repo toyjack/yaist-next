@@ -7,6 +7,7 @@ import {
   termCardsAtom,
   isSearchingAtom,
   sortStyleAtom,
+  pageSizeAtom,
 } from "@/store/atoms";
 import type { CharCardData, SortStyle } from "@/types";
 
@@ -16,12 +17,14 @@ export function useSearch() {
   const setTermCards = useSetAtom(termCardsAtom);
   const setIsSearching = useSetAtom(isSearchingAtom);
   const [sortStyle, setSortStyle] = useAtom(sortStyleAtom);
+  const setPageSize = useSetAtom(pageSizeAtom);
 
   const search = async (query: string, sort?: SortStyle) => {
     const q = query.trim();
     if (!q) return;
     setIsSearching(true);
     setResults([]);
+    setPageSize(50);
 
     try {
       const sortParam = sort ?? sortStyle;
