@@ -1,0 +1,55 @@
+{
+  "label": {
+    "searchLabel": "Components and stroke number",
+    "sortby": "Sort by",
+    "toPaste": "To copy",
+    "customTemplate": "Template",
+    "templateField": "Template",
+    "save": "Save",
+    "numberOfResults": "Number of results: ",
+    "totalStrokes": "Total strokes",
+    "relatedChar": "Related character",
+    "manual": "Manual",
+    "relatedCharLoaded": "Related Characters Data",
+    "ok": "OK",
+    "loading": "Loading",
+    "changeTemplate": "Settings",
+    "inputedLength": "Inputed Components",
+    "author": "Guanwei Liu"
+  },
+  "button": {
+    "search": "Search",
+    "decompose": "Decompose"
+  },
+  "option": {
+    "byunicode": "By Unicode",
+    "bystrokecount": "By stroke count",
+    "pasteCharacter": "Character",
+    "pasteUnicode": "Unicode scalar",
+    "pasteTemplate": "Template"
+  },
+  "message": {
+    "copied": "Copied!",
+    "isSearching": "Searching...",
+    "doneSearching": "Search complete",
+    "noResults": "No results found"
+  },
+  "help": {
+    "templateUnicode": "[[unicode]] is the Unicode scalar value like u4e00",
+    "templateIDS": "[[IDS]] is the IDS (Ideographic Description Sequence) like ⿰口土",
+    "templateCharacter": "[[character]] is the character itself",
+    "templateGlyphWiki": "[[GlyphWikiPNG]] is the PNG image URL from GlyphWiki. [[GlyphWikiSVG]] gives the SVG URL.",
+    "templateStandard": "[[standard]] is the related/variant character"
+  },
+  "manual": {
+    "title": "Manual",
+    "searchTitle": "How to Search",
+    "searchDesc": "Enter CJK components and remaining stroke count in the search box. Example: '口土3' searches for characters containing 口 and 土 with 3 remaining strokes.",
+    "decomposeTitle": "Decompose",
+    "decomposeDesc": "Enter a character and click 'Decompose' to break it into IDS components and fill the search box.",
+    "ivsTitle": "IVS (Ideographic Variation Sequences)",
+    "ivsDesc": "If a card shows an 'IVS' link, click it to select variant glyphs for that character.",
+    "pasteTitle": "Copy Formats",
+    "pasteDesc": "Choose from 3 copy formats: Character (the raw character), Unicode scalar (U+XXXX format), or XML template (customizable)."
+  }
+}

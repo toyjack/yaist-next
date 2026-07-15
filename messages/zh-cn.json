@@ -1,0 +1,55 @@
+{
+  "label": {
+    "searchLabel": "汉字部件与剩余笔画数",
+    "sortby": "显示顺序",
+    "toPaste": "复制内容",
+    "customTemplate": "XML模板",
+    "templateField": "模板",
+    "save": "保存",
+    "numberOfResults": "结果总数：",
+    "totalStrokes": "笔画数",
+    "relatedChar": "相关汉字",
+    "manual": "使用说明",
+    "relatedCharLoaded": "相关汉字数据",
+    "ok": "读取完成",
+    "loading": "读取中",
+    "changeTemplate": "设置",
+    "inputedLength": "已输入汉字部件",
+    "author": "刘冠伟"
+  },
+  "button": {
+    "search": "查找",
+    "decompose": "分解"
+  },
+  "option": {
+    "byunicode": "统一码编号",
+    "bystrokecount": "笔画数",
+    "pasteCharacter": "汉字",
+    "pasteUnicode": "统一码",
+    "pasteTemplate": "模板"
+  },
+  "message": {
+    "copied": "复制成功！",
+    "isSearching": "检索中...",
+    "doneSearching": "检索完成",
+    "noResults": "未找到结果"
+  },
+  "help": {
+    "templateUnicode": "[[unicode]]为Unicode值，例如：u4e00",
+    "templateIDS": "[[IDS]]为汉字IDS（表意字描述序列），例如：⿰口土",
+    "templateCharacter": "[[character]]为汉字本身",
+    "templateGlyphWiki": "[[GlyphWikiPNG]]为GlyphWiki的PNG图片URL。[[GlyphWikiSVG]]为SVG图片URL。",
+    "templateStandard": "[[standard]]为相关汉字"
+  },
+  "manual": {
+    "title": "使用说明",
+    "searchTitle": "搜索方法",
+    "searchDesc": "在搜索框中输入汉字部件和剩余笔画数。例如：「口土3」表示搜索包含口和土、剩余3画的汉字。",
+    "decomposeTitle": "分解功能",
+    "decomposeDesc": "输入汉字后点击「分解」按钮，可将该汉字的IDS（表意字描述序列）部件填入搜索框。",
+    "ivsTitle": "IVS（异体字选择符）",
+    "ivsDesc": "若卡片下方显示「IVS」链接，点击后可选择该汉字的异体字字形。",
+    "pasteTitle": "复制格式",
+    "pasteDesc": "可在「复制内容」中选择三种格式：汉字（字符本身）、统一码（U+XXXX格式）、XML模板（可自定义）。"
+  }
+}
