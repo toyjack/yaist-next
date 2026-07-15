@@ -4,9 +4,7 @@ const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ["idsfind"],
-  },
+  serverExternalPackages: ["idsfind"],
   images: {
     remotePatterns: [
       {
