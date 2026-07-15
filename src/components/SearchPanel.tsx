@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import {
@@ -10,6 +10,8 @@ import {
   isSearchingAtom,
 } from "@/store/atoms";
 import { useSearch } from "@/hooks/useSearch";
+import { parseTermHint } from "@/lib/helpers";
+import XmlCustomizeModal from "./XmlCustomizeModal";
 
 export default function SearchPanel() {
   const t = useTranslations();
@@ -18,101 +20,132 @@ export default function SearchPanel() {
   const [pasteType, setPasteType] = useAtom(pasteTypeAtom);
   const [isSearching] = useAtom(isSearchingAtom);
   const { search, decompose, fetchTermCards } = useSearch();
+  const [xmlOpen, setXmlOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchTermCards(term);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [term]);
 
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const tag = document.activeElement && document.activeElement.tagName;
+      const typing = tag === "INPUT" || tag === "TEXTAREA";
+      if (e.key === "/" && !typing) {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") search(term, sortStyle);
   };
 
+  const sortOptions: { key: "byUnicode" | "byStrokes"; label: string }[] = [
+    { key: "byUnicode", label: t("option.byunicode") },
+    { key: "byStrokes", label: t("option.bystrokecount") },
+  ];
+
+  const pasteOptions: { key: "character" | "unicode" | "tei"; label: string }[] = [
+    { key: "character", label: t("option.pasteCharacter") },
+    { key: "unicode", label: t("option.pasteUnicode") },
+    { key: "tei", label: t("option.pasteTemplate") },
+  ];
+
   return (
-    <aside className="w-64 shrink-0 sticky top-0 h-screen overflow-y-auto p-4 border-r border-base-200 bg-base-50 space-y-4">
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text font-semibold">
+    <>
+      <aside className="w-full md:w-[248px] shrink-0 flex flex-col gap-5 p-6 box-border border-b md:border-b-0 md:border-r border-border">
+        <div>
+          <label className="block font-serif font-semibold text-sm text-text mb-2">
             {t("label.searchLabel")}
-          </span>
-        </label>
-        <input
-          type="text"
-          className="input input-bordered input-sm"
-          value={term}
-          onChange={(e) => setTerm(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="口土3"
-        />
-      </div>
-
-      <div className="flex gap-2">
-        <button
-          className="btn btn-error btn-sm flex-1"
-          onClick={() => decompose(term)}
-        >
-          {t("button.decompose")}
-        </button>
-        <button
-          className="btn btn-primary btn-sm flex-1"
-          onClick={() => search(term, sortStyle)}
-          disabled={isSearching}
-        >
-          {isSearching ? (
-            <span className="loading loading-spinner loading-xs"></span>
-          ) : (
-            t("button.search")
-          )}
-        </button>
-      </div>
-
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text font-semibold">{t("label.sortby")}</span>
-        </label>
-        {(["byUnicode", "byStrokes"] as const).map((val) => (
-          <label key={val} className="label cursor-pointer justify-start gap-2">
-            <input
-              type="radio"
-              name="sortStyle"
-              className="radio radio-sm"
-              value={val}
-              checked={sortStyle === val}
-              onChange={() => setSortStyle(val)}
-            />
-            <span className="label-text">
-              {val === "byUnicode"
-                ? t("option.byunicode")
-                : t("option.bystrokecount")}
-            </span>
           </label>
-        ))}
-      </div>
+          <input
+            ref={inputRef}
+            type="text"
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="口土3"
+            className="w-full box-border border border-input-border rounded-sm px-2.5 py-2 text-sm bg-card text-text font-serif"
+          />
+          <div className="mt-1.5 text-[11px] text-text-muted font-mono min-h-[14px]">
+            {parseTermHint(term)}
+          </div>
+        </div>
 
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text font-semibold">{t("label.toPaste")}</span>
-        </label>
-        {(["character", "unicode", "tei"] as const).map((val) => (
-          <label key={val} className="label cursor-pointer justify-start gap-2">
-            <input
-              type="radio"
-              name="pasteType"
-              className="radio radio-sm"
-              value={val}
-              checked={pasteType === val}
-              onChange={() => setPasteType(val)}
-            />
-            <span className="label-text">
-              {val === "character"
-                ? t("option.pasteCharacter")
-                : val === "unicode"
-                ? t("option.pasteUnicode")
-                : t("option.pasteTemplate")}
-            </span>
+        <div className="flex gap-2.5">
+          <button
+            onClick={() => decompose(term)}
+            className="flex-1 bg-transparent text-text-subtle border border-input-border rounded-sm py-2 text-sm cursor-pointer"
+          >
+            {t("button.decompose")}
+          </button>
+          <button
+            onClick={() => search(term, sortStyle)}
+            disabled={isSearching}
+            className="flex-1 bg-accent text-white border-none rounded-sm py-2 text-sm tracking-wide cursor-pointer disabled:opacity-60"
+          >
+            {isSearching ? "…" : t("button.search")}
+          </button>
+        </div>
+
+        <div>
+          <label className="block font-semibold text-xs text-text-muted mb-2 uppercase tracking-wider">
+            {t("label.sortby")}
           </label>
-        ))}
-      </div>
-    </aside>
+          {sortOptions.map((opt) => (
+            <label
+              key={opt.key}
+              className="flex gap-2 items-center text-sm text-text-subtle py-0.5 cursor-pointer"
+            >
+              <input
+                type="radio"
+                name="sortStyle"
+                checked={sortStyle === opt.key}
+                onChange={() => setSortStyle(opt.key)}
+                className="accent-accent"
+              />
+              {opt.label}
+            </label>
+          ))}
+        </div>
+
+        <div>
+          <label className="block font-semibold text-xs text-text-muted mb-2 uppercase tracking-wider">
+            {t("label.toPaste")}
+          </label>
+          {pasteOptions.map((opt) => (
+            <label
+              key={opt.key}
+              className="flex gap-2 items-center text-sm text-text-subtle py-0.5 cursor-pointer"
+            >
+              <input
+                type="radio"
+                name="pasteType"
+                checked={pasteType === opt.key}
+                onChange={() => setPasteType(opt.key)}
+                className="accent-accent"
+              />
+              {opt.label}
+            </label>
+          ))}
+        </div>
+
+        <div className="border-t border-border pt-4">
+          <button
+            onClick={() => setXmlOpen(true)}
+            className="w-full bg-transparent border border-dashed border-input-border text-text-subtle rounded-sm py-2 text-xs cursor-pointer font-mono"
+          >
+            ⚙ {t("label.customTemplate")}
+          </button>
+        </div>
+      </aside>
+
+      <XmlCustomizeModal isOpen={xmlOpen} onClose={() => setXmlOpen(false)} />
+    </>
   );
 }

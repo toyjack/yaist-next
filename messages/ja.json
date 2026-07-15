@@ -15,7 +15,11 @@
     "changeTemplate": "設定",
     "relatedChar": "関連漢字",
     "inputedLength": "入力した部品",
-    "author": "劉冠偉"
+    "author": "劉冠偉",
+    "selectMode": "複数選択",
+    "exitSelectMode": "選択を終了",
+    "selectedCount": "選択中",
+    "bulkCopy": "選択をコピー"
   },
   "button": {
     "search": "検索",

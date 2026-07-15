@@ -88,6 +88,17 @@ export const DEFAULT_TEMPLATE = `<glyph xml:id="[[unicode]]">
 </glyph>
 `;
 
+export function parseTermHint(term: string): string {
+  if (!term) return "";
+  const match = term.match(/^(.*?)(\d+)?$/);
+  const comps = (match && match[1] ? match[1] : term).split("").filter(Boolean);
+  const strokes = match && match[2] ? match[2] : null;
+  if (comps.length === 0 && !strokes) return "";
+  let out = "部件：" + (comps.join(" + ") || "无");
+  if (strokes) out += " ｜ 剩余 " + strokes + " 画";
+  return out;
+}
+
 export function fillTemplate(
   template: string,
   data: {

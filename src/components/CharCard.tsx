@@ -10,9 +10,17 @@ import type { CharCardData } from "@/types";
 
 interface CharCardProps {
   card: CharCardData;
+  selectMode?: boolean;
+  selected?: boolean;
+  onToggleSelect?: (card: CharCardData) => void;
 }
 
-export default function CharCard({ card }: CharCardProps) {
+export default function CharCard({
+  card,
+  selectMode = false,
+  selected = false,
+  onToggleSelect,
+}: CharCardProps) {
   const t = useTranslations();
   const [pasteType] = useAtom(pasteTypeAtom);
   const [template] = useAtom(templateAtom);
@@ -20,6 +28,11 @@ export default function CharCard({ card }: CharCardProps) {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = async () => {
+    if (selectMode) {
+      onToggleSelect?.(card);
+      return;
+    }
+
     let toPaste = "";
     switch (pasteType) {
       case "character":
@@ -49,58 +62,62 @@ export default function CharCard({ card }: CharCardProps) {
 
   return (
     <>
-      <div className="card card-bordered bg-base-100 shadow-sm hover:shadow-md transition-shadow">
-        <figure
-          className="cursor-pointer p-2 relative"
+      <div
+        onClick={() => selectMode && onToggleSelect?.(card)}
+        className={`border rounded-sm bg-card flex flex-col cursor-pointer relative ${
+          selected ? "border-2 border-accent" : "border-border"
+        }`}
+      >
+        {selectMode && (
+          <div
+            className="absolute top-1.5 left-1.5 w-[18px] h-[18px] rounded-[3px] border-[1.5px] border-accent z-[2] flex items-center justify-center text-[11px] text-white"
+            style={{ background: selected ? "var(--color-accent)" : "transparent" }}
+          >
+            {selected ? "✓" : ""}
+          </div>
+        )}
+        <div
           onClick={copyToClipboard}
           title={t("message.copied")}
+          className="p-3.5 flex items-center justify-center bg-panel relative"
         >
-          <img
-            src={card.gwSvgUrl}
-            alt={card.char}
-            className="w-full aspect-square object-contain"
-            loading="lazy"
-          />
+          <span className="font-serif text-[44px] text-text leading-none">
+            {card.char}
+          </span>
           {copied && (
-            <div className="absolute inset-0 flex items-center justify-center bg-base-100/80 rounded">
-              <span className="badge badge-success text-xs">
+            <div className="absolute inset-0 flex items-center justify-center bg-panel/95">
+              <span className="bg-[#5C6B4F] text-white text-[11px] px-2.5 py-1 rounded-sm">
                 {t("message.copied")}
               </span>
             </div>
           )}
-        </figure>
-        <div className="card-body p-2 gap-1">
-          <div className="flex items-center gap-2">
-            <span className="text-3xl leading-none">{card.char}</span>
-            <div className="flex flex-col text-xs">
-              <a
-                href={`https://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint=${unicodeHex}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link link-primary font-mono"
-              >
-                {card.unicode}
-              </a>
-              <span className="text-base-content/60">{card.block}</span>
-            </div>
-          </div>
-          <div className="text-xs text-base-content/80">
-            {t("label.totalStrokes")}：{card.strokes}
-          </div>
-          <div className="text-xs text-base-content/80">
-            {t("label.relatedChar")}：
-            {card.variants.length > 0 ? card.variants.join("") : "X"}
-          </div>
         </div>
-        {card.ivsCodes.length > 0 && (
-          <div className="card-footer border-t border-base-200">
-            <button
-              className="btn btn-ghost btn-xs w-full"
-              onClick={() => setIvsOpen(true)}
-            >
-              IVS
-            </button>
-          </div>
+        <div className="px-3 py-2.5 border-t border-border flex flex-col gap-0.5">
+          <a
+            href={`https://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint=${unicodeHex}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => selectMode && e.preventDefault()}
+            className="font-mono text-[11px] text-accent"
+          >
+            {card.unicode}
+          </a>
+          <span className="text-[10px] text-text-muted">{card.block}</span>
+          <span className="text-[11px] text-text-subtle">
+            {t("label.totalStrokes")} {card.strokes} ｜ {t("label.relatedChar")}{" "}
+            {card.variants.length > 0 ? card.variants.join("") : "X"}
+          </span>
+        </div>
+        {card.ivsCodes.length > 0 && !selectMode && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setIvsOpen(true);
+            }}
+            className="border-t border-border bg-transparent py-1.5 text-[11px] text-accent cursor-pointer font-mono"
+          >
+            IVS
+          </button>
         )}
       </div>
 

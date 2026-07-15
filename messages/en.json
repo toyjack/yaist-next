@@ -15,7 +15,11 @@
     "loading": "Loading",
     "changeTemplate": "Settings",
     "inputedLength": "Inputed Components",
-    "author": "Guanwei Liu"
+    "author": "Guanwei Liu",
+    "selectMode": "Select",
+    "exitSelectMode": "Exit select",
+    "selectedCount": "Selected",
+    "bulkCopy": "Copy selected"
   },
   "button": {
     "search": "Search",

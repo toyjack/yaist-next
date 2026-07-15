@@ -9,48 +9,60 @@ interface ManualModalProps {
 
 export default function ManualModal({ isOpen, onClose }: ManualModalProps) {
   const t = useTranslations("manual");
+  const tLabel = useTranslations("label");
 
   if (!isOpen) return null;
 
   return (
-    <dialog className="modal modal-open" onClick={onClose}>
-      <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+    <div
+      onClick={onClose}
+      className="fixed inset-0 bg-[rgba(20,16,12,0.45)] flex items-center justify-center z-[100] p-4"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-bg rounded-sm p-6 w-[480px] max-w-full relative box-border"
+      >
         <button
-          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
           onClick={onClose}
+          className="absolute right-3.5 top-3.5 bg-transparent border-none text-lg cursor-pointer text-text-muted"
         >
           ✕
         </button>
-        <h3 className="font-bold text-lg mb-4">{t("title")}</h3>
+        <h3 className="font-serif font-bold text-[19px] mb-4 text-text">
+          {t("title")}
+        </h3>
 
-        <div className="space-y-4 text-sm">
+        <div className="text-sm text-text-subtle flex flex-col gap-3">
           <section>
-            <h4 className="font-semibold mb-1">{t("searchTitle")}</h4>
-            <p className="text-base-content/80">{t("searchDesc")}</p>
+            <div className="font-semibold mb-1 text-accent">{t("searchTitle")}</div>
+            <p className="m-0">{t("searchDesc")}</p>
           </section>
-          <div className="divider my-2"></div>
+          <div className="h-px bg-border" />
           <section>
-            <h4 className="font-semibold mb-1">{t("decomposeTitle")}</h4>
-            <p className="text-base-content/80">{t("decomposeDesc")}</p>
+            <div className="font-semibold mb-1 text-accent">{t("decomposeTitle")}</div>
+            <p className="m-0">{t("decomposeDesc")}</p>
           </section>
-          <div className="divider my-2"></div>
+          <div className="h-px bg-border" />
           <section>
-            <h4 className="font-semibold mb-1">{t("ivsTitle")}</h4>
-            <p className="text-base-content/80">{t("ivsDesc")}</p>
+            <div className="font-semibold mb-1 text-accent">{t("ivsTitle")}</div>
+            <p className="m-0">{t("ivsDesc")}</p>
           </section>
-          <div className="divider my-2"></div>
+          <div className="h-px bg-border" />
           <section>
-            <h4 className="font-semibold mb-1">{t("pasteTitle")}</h4>
-            <p className="text-base-content/80">{t("pasteDesc")}</p>
+            <div className="font-semibold mb-1 text-accent">{t("pasteTitle")}</div>
+            <p className="m-0">{t("pasteDesc")}</p>
           </section>
         </div>
 
-        <div className="modal-action">
-          <button className="btn" onClick={onClose}>
-            OK
+        <div className="flex justify-end mt-5">
+          <button
+            onClick={onClose}
+            className="bg-accent text-white border-none rounded-sm px-5 py-2 text-sm cursor-pointer"
+          >
+            {tLabel("ok")}
           </button>
         </div>
       </div>
-    </dialog>
+    </div>
   );
 }

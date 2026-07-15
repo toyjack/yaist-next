@@ -46,38 +46,43 @@ export default function IvsModal({ card, isOpen, onClose }: IvsModalProps) {
   };
 
   return (
-    <dialog className="modal modal-open" onClick={onClose}>
-      <div className="modal-box max-w-3xl" onClick={(e) => e.stopPropagation()}>
+    <div
+      onClick={onClose}
+      className="fixed inset-0 bg-[rgba(20,16,12,0.45)] flex items-center justify-center z-[100] p-4"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-bg rounded-sm p-6 w-[640px] max-w-full relative box-border"
+      >
         <button
-          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
           onClick={onClose}
+          className="absolute right-3.5 top-3.5 bg-transparent border-none text-lg cursor-pointer text-text-muted"
         >
           ✕
         </button>
-        <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 mt-4">
+        <h3 className="font-serif font-bold text-[19px] mb-4 text-text">
+          {card.char} 的异体字选择符
+        </h3>
+        <div className="grid gap-3 [grid-template-columns:repeat(auto-fill,minmax(100px,1fr))]">
           {card.ivsCodes.map((ivs) => (
             <div
               key={ivs}
-              className="card card-bordered cursor-pointer hover:bg-base-200 transition-colors"
               onClick={() => copyIvs(ivs)}
+              className="border border-border rounded-sm bg-card p-2.5 text-center cursor-pointer"
             >
-              <figure className="p-2">
-                <img
-                  src={getIvsGwSvgUrl(card.char, ivs)}
-                  alt={`IVS ${ivs}`}
-                  className="w-full aspect-square object-contain"
-                  loading="lazy"
-                />
-              </figure>
-              <div className="card-body p-2 pt-0">
-                <p className="text-xs text-center text-base-content/70">
-                  IVS: {ivs}
-                </p>
+              <img
+                src={getIvsGwSvgUrl(card.char, ivs)}
+                alt={`IVS ${ivs}`}
+                className="w-full aspect-square object-contain"
+                loading="lazy"
+              />
+              <div className="font-mono text-[10px] text-accent mt-1.5">
+                IVS {ivs}
               </div>
             </div>
           ))}
         </div>
       </div>
-    </dialog>
+    </div>
   );
 }

@@ -1,3 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --color-bg: #faf6ef;
+  --color-panel-bg: #fdfbf6;
+  --color-border: #e4d9c7;
+  --color-text: #2b2420;
+  --color-text-muted: #a3927a;
+  --color-text-subtle: #8a7a63;
+  --color-accent: #b23a2e;
+  --color-card-bg: #ffffff;
+  --color-input-border: #d8c9ae;
+}
+
+:root.dark {
+  --color-bg: #1f1b16;
+  --color-panel-bg: #2a241d;
+  --color-border: #3d352a;
+  --color-text: #f2e9da;
+  --color-text-muted: #a89478;
+  --color-text-subtle: #c7b9a0;
+  --color-accent: #e0774a;
+  --color-card-bg: #26211a;
+  --color-input-border: #4a4030;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans SC", sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: background 0.2s, color 0.2s;
+}
+
+@keyframes yr-shimmer {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.yr-skeleton {
+  animation: yr-shimmer 1.1s ease-in-out infinite;
+}

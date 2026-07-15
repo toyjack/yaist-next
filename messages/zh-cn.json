@@ -15,7 +15,11 @@
     "loading": "读取中",
     "changeTemplate": "设置",
     "inputedLength": "已输入汉字部件",
-    "author": "刘冠伟"
+    "author": "刘冠伟",
+    "selectMode": "多选",
+    "exitSelectMode": "退出多选",
+    "selectedCount": "已选",
+    "bulkCopy": "复制所选"
   },
   "button": {
     "search": "查找",

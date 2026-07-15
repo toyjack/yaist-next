@@ -11,6 +11,8 @@ export const termCardsAtom = atom<CharCardData[]>([]);
 export const sortStyleAtom = atom<SortStyle>("byUnicode");
 export const isSearchingAtom = atom(false);
 export const pageSizeAtom = atom(50);
+export const selectModeAtom = atom(false);
+export const selectedUnicodesAtom = atom<string[]>([]);
 
 export const pasteTypeAtom = atomWithStorage<PasteType>(
   "yaist-pasteType",
@@ -20,6 +22,7 @@ export const templateAtom = atomWithStorage<string>(
   "yaist-template",
   DEFAULT_TEMPLATE
 );
+export const darkModeAtom = atomWithStorage<boolean>("yaist-darkMode", false);
 
 export const sortedResultsAtom = atom((get) => {
   const results = get(resultsAtom);
