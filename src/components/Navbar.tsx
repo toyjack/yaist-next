@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter } from "@/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import ManualModal from "./ManualModal";
 import XmlCustomizeModal from "./XmlCustomizeModal";
 
